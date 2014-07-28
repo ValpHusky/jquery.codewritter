@@ -1,33 +1,34 @@
 var jqcWritterLangRules = {};
 // String code
 var jqcWritterDefaults = {
-css: {
-        commentline: {color: "#999999", "font-weight": "lighter"},
-        commentblock: {color: "#999999", "font-weight": "lighter"},
-        arithmeticOperator: {color: "#0040FF"},
-        discreteOperator: {color: "#0040FF"},
-        punctuation: {color: "#000000"},
-        reservedWord: {color: "#5858FA", "font-weight": "bold"},
-        specialWord: {color: "#DF01D7", "font-weight": "bold"},
-        regex: {color: "#642EFE"},
-        string: {color: "#FF8000"},
-        number: {color: "#FE2E9A"},
-        boolean: {color: "#088A08"},
-        word: {color: "#333333"},
-        break: { width: "100%", display: "block"},
-        whitespace:{},
-        tab: {}
-}, speed: 10,
-ajaxMethod: "POST",
-ajaxData: null,
-loop: true,
-cleanAfterDone: true,
-html: true,
-language: "javascript",
-classPrefix: "jqcw_",
-tabsize: "30px",
-breaksize: "5px",
-fontsize: "11px",
+    css: {
+            commentline: {color: "#999999", "font-weight": "lighter"},
+            commentblock: {color: "#999999", "font-weight": "lighter"},
+            arithmeticOperator: {color: "#0040FF"},
+            discreteOperator: {color: "#0040FF"},
+            punctuation: {color: "#000000"},
+            reservedWord: {color: "#5858FA", "font-weight": "bold"},
+            specialWord: {color: "#DF01D7", "font-weight": "bold"},
+            regex: {color: "#642EFE"},
+            string: {color: "#FF8000"},
+            number: {color: "#FE2E9A"},
+            boolean: {color: "#088A08"},
+            word: {color: "#333333"},
+            break: { width: "100%", display: "block"},
+            whitespace:{},
+            tab: {}
+    }, speed: 10,
+    ajaxMethod: "POST",
+    ajaxData: null,
+    loop: true,
+    cleanAfterDone: true,
+    html: true,
+    keepscroll:true,
+    language: "javascript",
+    classPrefix: "jqcw_",
+    tabsize: "15px",
+    breaksize: "5px",
+    fontsize: "18px",
 };
 
 var jqcwritterCodeParser = function(code, params) {
@@ -270,6 +271,9 @@ var jqcwritterReader = function(object, code, params) {
 			interval = setTimeout(function() {
 				object.append(parser.next());
 				me.doIntervals(interval, object, parser);
+                                        if(me.params.keepscroll){
+                                             object[0].scrollTop = object[0].scrollHeight;
+                                        }
 			}, me.newTimespan());
 		}
 	};
@@ -281,7 +285,7 @@ var jqcwritterReader = function(object, code, params) {
 		var style = document.createElement('style');
 		style.type = 'text/css';
                     var css = "";
-                    css += ".jqcw > span{min-width:5px;min-height:5px;display:inline-block;float:left;font-size:"+this.params.fontsize+"}";
+                    css += ".jqcw > span{font-family:sans-serif;min-width:5px;min-height:5px;display:inline-block;float:left;font-size:"+this.params.fontsize+"}";
 		for (var i in this.params.css) {
 			css += "." + this.params.classPrefix + i + "{ ";
                               if(i==="tab"){
@@ -294,7 +298,6 @@ var jqcwritterReader = function(object, code, params) {
 				css += j + ":" + this.params.css[i][j] + ";"
 			}
 			css += "}";
-                        console.log(css);
 			
 		}
                     if (style.styleSheet) {
