@@ -14,7 +14,7 @@ jqcWritterLangRules.javascript = {
     capsulingRules: {
         regex: [{
             open: [/\//,/[^\/]/],
-            close: [/\//]
+            close: [/\//,/\s|\n|\r|\;/]
         }],
         commentline: [{
             open: [/\//,/\//],
